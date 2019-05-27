@@ -1,6 +1,6 @@
 /** Includes **/
 /**************/
-#include "SonarArray.h"
+#include "SonarArray.hpp"
 
 /** Constructor **/
 /*****************/

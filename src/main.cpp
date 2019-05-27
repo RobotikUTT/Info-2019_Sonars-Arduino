@@ -7,7 +7,7 @@
 //libs :
 //sonars :
 #include <HC_SR04.h>
-#include <SonarArray.h>
+#include <SonarArray.hpp>
 
 //oled i2c screen :
 #include <Adafruit_GFX.h>
@@ -29,7 +29,7 @@ SonarArray sonarArray(NB_SONARS, SONAR_ECHO_FRONT_L, SONAR_TRIG_FRONT_L,
                                  SONAR_ECHO_BACK, SONAR_TRIG_BACK);
 
 CanHandler can;
-
+unsigned long lastMillis = 0;
 
 void setup() {
   Serial.begin(57600);
@@ -40,16 +40,19 @@ void setup() {
 
 void loop() {
   sonarArray.update();
-  //measures = sonarArray.getDistancesCM();
-  //Serial.println(measures[0]);
 
   auto frame = can.read();
+	if (can.is(frame, UPDATE_SCREEN)) {
+    // First argument
+    int points = frame[1];
 
-	if (can.is(frame, SONAR_DISTANCE)) {
-		// CODE HERE
+		// TODO : Set screen points here
 	}
 
-  Serial.println("coucou");
+  if (lastMillis + 200 < millis()) {
+    sendSonarsValueToCan();
+    lastMillis = millis();
+  }
 }
 
 void sendSonarsValueToCan()

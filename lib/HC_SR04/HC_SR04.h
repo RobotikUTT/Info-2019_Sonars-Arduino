@@ -9,7 +9,7 @@ function in your main loop.
 every measure is in millimeters.
 
 Author: Apache
-/**************************/
+**************************/
 
 #ifndef HC_SR04_H
 #define HC_SR04_H
