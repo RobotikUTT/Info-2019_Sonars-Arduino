@@ -16,7 +16,7 @@
 //CAN :
 #include <SPI.h>
 #include <mcp2515.h>
-#include "../lib/can_interface/arduino/can.hpp"
+#include <arduino/can.hpp>
 
 void sendSonarsValueToCan();
 
@@ -29,6 +29,7 @@ SonarArray sonarArray(NB_SONARS, SONAR_ECHO_FRONT_L, SONAR_TRIG_FRONT_L,
                                  SONAR_ECHO_BACK, SONAR_TRIG_BACK);
 
 CanHandler can;
+
 
 void setup() {
   Serial.begin(57600);
@@ -44,13 +45,15 @@ void loop() {
 
   auto frame = can.read();
 
-	/*if (can.is(frame, WHO_AM_I)) {
+	if (can.is(frame, SONAR_DISTANCE)) {
 		// CODE HERE
-	}*/
+	}
+
+  Serial.println("coucou");
 }
 
 void sendSonarsValueToCan()
 {
   std::vector<uint8_t> measures = sonarArray.getDistancesCM();
-  can.send(23, measures[0], measures[1], measures[2], measures[3], measures[4]);
+  can.send(SONAR_DISTANCE, measures[0], measures[1], measures[2], measures[3], measures[4]);
 }
