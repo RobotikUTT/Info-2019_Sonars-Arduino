@@ -17,13 +17,13 @@ SonarArray::SonarArray(uint8_t nbSonars, ...)
 		_echo_pin = va_arg(argv, int);
 		HC_SR04 sonar(_trig_pin,_echo_pin);
 		m_sonarVector.push_back(sonar);
-		
+
 		m_activatedSonars.push_back(true);
-		
+
 		m_distances.push_back(sonar.getDistance() );
 
 	}
-	
+
 	m_array_counter = 0;
 	va_end(argv);
 }
@@ -44,7 +44,7 @@ SonarArray::~SonarArray()
 
 void SonarArray::update()
 {
-	
+
 	uint8_t i = m_array_counter % m_sonarVector.size();
 	HC_SR04* sonar = &m_sonarVector[i];
 	if ( m_activatedSonars[i] )
@@ -68,12 +68,26 @@ void SonarArray::update()
 		m_array_counter++;
 	}
 
-	
+
 }
 
 std::vector<uint16_t> SonarArray::getDistances()
 {
 	return m_distances;
+}
+
+std::vector<uint8_t> SonarArray::getDistancesCM()
+{
+	std::vector<uint8_t>	distances_cm;
+	for (size_t i = 0; i < getNbSonars(); i++) {
+		uint16_t var = m_distances[i]/10;
+		if (var > 255) {
+			var = 255;
+		}
+		distances_cm.push_back((uint8_t)var);
+	}
+
+	return distances_cm;
 }
 
 void SonarArray::addSonar(int trig_pin, int echo_pin)
@@ -144,8 +158,8 @@ bool SonarArray::detectTooClose()
 
 	for (uint8_t i = 0; i < m_sonarVector.size(); ++i)
 	{
-		res = res || 
-			(m_activatedSonars[i] && 
+		res = res ||
+			(m_activatedSonars[i] &&
 				m_distances[i] < CLOSEST_DIST_BEFORE_WARN) ;
 	}
 

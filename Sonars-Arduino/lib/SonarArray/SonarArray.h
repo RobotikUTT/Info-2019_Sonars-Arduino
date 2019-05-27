@@ -7,7 +7,7 @@
 #include "Arduino.h"
 #include "HC_SR04.h"
 //#include <StandardCplusplus.h>
-#include <ArduinoSTL.h> //remplace StandardCplusplus.h for new arduino IDE version 
+#include <ArduinoSTL.h> //remplace StandardCplusplus.h for new arduino IDE version
 #include <vector>
 #include <map>
 #include <iterator>
@@ -48,6 +48,8 @@ class SonarArray
 		void update();
 		// returns the array with every distance
 		std::vector<uint16_t> getDistances();
+		// returns the array with every distance in cm with a maximum of 255cm
+		std::vector<uint8_t> getDistancesCM();
 		// adds a sonar to the array
 		void addSonar(int trig_pin, int echo_pin);
 		// return the number of sonars in the array
