@@ -76,7 +76,7 @@ std::vector<uint16_t> SonarArray::getDistances()
 	return m_distances;
 }
 
-std::vector<uint8_t> SonarArray::getDistancesCM()
+/*std::vector<uint8_t> SonarArray::getDistancesCM()
 {
 	std::vector<uint8_t>	distances_cm;
 	for (size_t i = 0; i < getNbSonars(); i++) {
@@ -88,7 +88,7 @@ std::vector<uint8_t> SonarArray::getDistancesCM()
 	}
 
 	return distances_cm;
-}
+}*/
 
 void SonarArray::addSonar(int trig_pin, int echo_pin)
 {

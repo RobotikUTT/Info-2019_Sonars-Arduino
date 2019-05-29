@@ -48,8 +48,8 @@ class SonarArray
 		void update();
 		// returns the array with every distance
 		std::vector<uint16_t> getDistances();
-		// returns the array with every distance in cm with a maximum of 255cm
-		std::vector<uint8_t> getDistancesCM();
+		/*// returns the array with every distance in cm with a maximum of 255cm
+		std::vector<uint8_t> getDistancesCM();*/
 		// adds a sonar to the array
 		void addSonar(int trig_pin, int echo_pin);
 		// return the number of sonars in the array

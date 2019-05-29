@@ -15,4 +15,7 @@
 #define SONAR_ECHO_BACK    SONAR_4_ECHO
 #define SONAR_TRIG_BACK    SONAR_4_TRIG
 
+//#define SONAR_ECHO_R       SONAR_5_ECHO
+//#define SONAR_TRIG_R       SONAR_5_TRIG
+
 #endif

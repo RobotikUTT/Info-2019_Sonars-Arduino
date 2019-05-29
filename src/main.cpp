@@ -6,8 +6,8 @@
 
 //libs :
 //sonars :
-#include <HC_SR04.h>
-#include <SonarArray.hpp>
+//#include <HC_SR04.h>
+//#include <SonarArray.hpp>
 
 //oled i2c screen :
 #include <LiquidCrystal_I2C.h>
@@ -15,15 +15,26 @@
 //CAN :
 #include <arduino/serial.hpp>
 
+#include <Ultrasonic.h>
+
 // Sonars functions and objects
 void sendSonarsValueToCan();
-SonarArray sonarArray(NB_SONARS,
-  SONAR_ECHO_FRONT_L,SONAR_TRIG_FRONT_L,
-  SONAR_ECHO_FRONT_R, SONAR_TRIG_FRONT_R,
-  SONAR_ECHO_L, SONAR_TRIG_L,
-  SONAR_ECHO_R, SONAR_TRIG_R,
-  SONAR_ECHO_BACK, SONAR_TRIG_BACK
-);
+
+/*SonarArray sonarArray(NB_SONARS,
+  SONAR_TRIG_FRONT_L, SONAR_ECHO_FRONT_L,
+  SONAR_TRIG_FRONT_R, SONAR_ECHO_FRONT_R,
+  SONAR_TRIG_L, SONAR_ECHO_L,
+  SONAR_TRIG_R, SONAR_ECHO_R,
+  SONAR_TRIG_BACK, SONAR_ECHO_BACK
+);*/
+
+Ultrasonic sonar0(SONAR_TRIG_FRONT_L, SONAR_ECHO_FRONT_L);
+Ultrasonic sonar1(SONAR_TRIG_FRONT_R, SONAR_ECHO_FRONT_R);
+Ultrasonic sonar2(SONAR_TRIG_L, SONAR_ECHO_L);
+Ultrasonic sonar3(SONAR_TRIG_R, SONAR_ECHO_R);
+Ultrasonic sonar4(SONAR_TRIG_BACK, SONAR_ECHO_BACK);
+
+
 unsigned long lastMillis = 0;
 
 // Serial handler for frames coming from serial
@@ -46,7 +57,7 @@ void setup() {
 }
 
 void loop() {
-  sonarArray.update();
+  //sonarArray.update();
 
   std::vector<int> frame = serialHandler.read();
 
@@ -95,10 +106,17 @@ void loop() {
     sendSonarsValueToCan();
     lastMillis = millis();
   }
+
 }
 
 void sendSonarsValueToCan()
 {
-  std::vector<uint8_t> measures = sonarArray.getDistancesCM();
+  uint8_t measures[5] = {(uint8_t)sonar0.Ranging(CM), (uint8_t)sonar1.Ranging(CM), (uint8_t)sonar2.Ranging(CM), (uint8_t)sonar3.Ranging(CM), (uint8_t)sonar4.Ranging(CM), };
   serialHandler.send(SONAR_DISTANCE, measures[0], measures[1], measures[2], measures[3], measures[4]);
+  /*for (size_t i = 0; i < 5; i++) {
+    Serial.print(measures[i]);
+    Serial.print("\t");
+  }*/
+  //Serial.print(measures[3]);
+  Serial.flush();
 }
