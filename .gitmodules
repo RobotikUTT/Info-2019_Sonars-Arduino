@@ -1,15 +1,10 @@
 [submodule "lib/can_interface"]
 	path = lib/can_interface
 	url = https://github.com/RobotikUTT/Info-2019_Interface.git
-[submodule "lib/Adafruit_SSD1306"]
-	path = lib/Adafruit_SSD1306
-	url = https://github.com/adafruit/Adafruit_SSD1306.git
-[submodule "lib/Adafruit-GFX-Library"]
-	path = lib/Adafruit-GFX-Library
 	url = https://github.com/adafruit/Adafruit-GFX-Library.git
 [submodule "lib/ArduinoSTL"]
 	path = lib/ArduinoSTL
 	url = https://github.com/mike-matera/ArduinoSTL.git
-[submodule "lib/mcp2515"]
-	path = lib/mcp2515
-	url = https://github.com/autowp/arduino-mcp2515.git
+[submodule "lib/LiquidCrystal_I2C"]
+	path = lib/LiquidCrystal_I2C
+	url = https://github.com/johnrickman/LiquidCrystal_I2C.git
