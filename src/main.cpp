@@ -30,9 +30,8 @@ void sendSonarsValueToCan();
 
 Ultrasonic sonar0(SONAR_TRIG_FRONT_L, SONAR_ECHO_FRONT_L);
 Ultrasonic sonar1(SONAR_TRIG_FRONT_R, SONAR_ECHO_FRONT_R);
-Ultrasonic sonar2(SONAR_TRIG_L, SONAR_ECHO_L);
-Ultrasonic sonar3(SONAR_TRIG_R, SONAR_ECHO_R);
-Ultrasonic sonar4(SONAR_TRIG_BACK, SONAR_ECHO_BACK);
+Ultrasonic sonar2(SONAR_TRIG_BACK_L, SONAR_ECHO_BACK_L);
+Ultrasonic sonar3(SONAR_TRIG_BACK_R, SONAR_ECHO_BACK_R);
 
 
 unsigned long lastMillis = 0;
@@ -111,9 +110,9 @@ void loop() {
 
 void sendSonarsValueToCan()
 {
-  uint8_t measures[5] = {(uint8_t)sonar0.Ranging(CM), (uint8_t)sonar1.Ranging(CM), (uint8_t)sonar2.Ranging(CM), (uint8_t)sonar3.Ranging(CM), (uint8_t)sonar4.Ranging(CM), };
+  uint8_t measures[4] = {(uint8_t)sonar0.Ranging(CM), (uint8_t)sonar1.Ranging(CM), (uint8_t)sonar2.Ranging(CM), (uint8_t)sonar3.Ranging(CM), };
   serialHandler.send(SONAR_DISTANCE, measures[0], measures[1], measures[2], measures[3], measures[4]);
-  /*for (size_t i = 0; i < 5; i++) {
+  /*for (size_t i = 0; i < 4; i++) {
     Serial.print(measures[i]);
     Serial.print("\t");
   }*/
